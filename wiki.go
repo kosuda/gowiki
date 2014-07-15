@@ -119,14 +119,15 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
-		err = ioutil.WriteFile("final-port.txt", []byte(l.Addr().String()+"\n"), 0644)
 		if err != nil {
 			log.Fatal(err)
 		}
+		log.Printf("Listen address : %s", l.Addr())
 		s := &http.Server{}
 		s.Serve(l)
 		return
 	}
 
+	log.Println("Listen address : 127.0.0.1:9000")
 	http.ListenAndServe(":9000", nil)
 }
