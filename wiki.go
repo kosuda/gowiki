@@ -10,6 +10,7 @@ import (
 	"regexp"
 )
 
+// Page is a view type.
 type Page struct {
 	Title string
 	Body  []byte
@@ -52,7 +53,6 @@ func viewHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	renderTemplate(w, "view", p)
-	//fmt.Fprintf(w, "<h1>%s</h1><div>%s</div>", p.Title, p.Body)
 }
 
 func editHandler(w http.ResponseWriter, r *http.Request) {
@@ -62,11 +62,6 @@ func editHandler(w http.ResponseWriter, r *http.Request) {
 		p = &Page{Title: title}
 	}
 	renderTemplate(w, "edit", p)
-	//	fmt.Fprintf(w, "<h1>Editing %s</h1>"+
-	//		"<form> <action = \"/save/%s\" method=\"POST\">"+
-	//		"<textarea name=\"body\">%s</textarea><br>"+
-	//		"</form>",
-	//		p.Title, p.Title, p.Body)
 }
 
 func saveHandler(w http.ResponseWriter, r *http.Request) {
@@ -85,13 +80,6 @@ func saveHandler(w http.ResponseWriter, r *http.Request) {
 
 func renderTemplate(w http.ResponseWriter, tmpl string, p *Page) {
 	err := templates[tmpl].Execute(w, p)
-	//	t, err := template.ParseFiles(tmpl + ".html")
-	//	if err != nil {
-	//		log.Fatal(err)
-	//		http.Error(w, err.Error(), http.StatusInternalServerError)
-	//		return
-	//	}
-	//  err = t.Execute(w, p)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
@@ -121,8 +109,8 @@ func main() {
 	http.HandleFunc("/view/", viewHandler)
 	http.HandleFunc("/edit/", editHandler)
 	http.HandleFunc("/save/", saveHandler)
-	log.Println("Listen... : port 8080")
-	err := http.ListenAndServe(":8080", nil)
+	log.Println("Listen... : port 9000")
+	err := http.ListenAndServe(":9000", nil)
 	if err != nil {
 		log.Fatal("ListenAndServe :", err)
 	}
